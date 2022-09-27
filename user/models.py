@@ -1,6 +1,7 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-
+from django.utils import timezone
 # User Manager
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, nome, password, **other):
@@ -10,7 +11,7 @@ class CustomUserManager(BaseUserManager):
 
         user = self.model(
             email = self.normalize_email(email),
-            nome = nome,
+            nome = nome, **other
         )
 
         user.set_password(password)
@@ -18,7 +19,7 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db) #usando banco de dados padrão
         return user
 
-    def create_superuser(self, email, nome, password, *other):
+    def create_superuser(self, email, nome, password, **other):
         
         user = self.create_user(
             email,
@@ -52,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     last_login = models.DateTimeField(null=True)
-    date_joined = models.DateTimeField(null=True)
+    date_joined = models.DateTimeField(default=timezone.now ,null=True)
     
     objects = CustomUserManager()
 
