@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href="{% static 'stylesCSS/styleLogin.css'%}">{% endblock css %}
+{% block title %}Cadastre-se{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-10 col-lg-10 col-xl-10">
+            <!-- CONTAINER BRANCO -->
+            <div class="containerBranco">
+                <!-- ELEMENTOS -->
+                <div class="ttp">
+                    <a href="{% url 'home'%}"><img class="iconLog" src="{% static 'imagens/CLOTHS ICON.png'%}" alt=""><br></a>
+                </div>
+                <h2> <b>CRIE SUA CONTA</b> </h2><br>
+                <!-- FORMULARIO -->
+                <form action="" class="form-bt">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>DADOS DA CONTA</p>
+                                </div>
+                                <div class="col-12">
+                                    <input name='nome' class="inptDADOS" placeholder="NOME" type="text" required>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <input name='cpf' class="inptDADOS" placeholder="CPF (000.000.000-00)" type="text" required>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <input name="rg" class="inptDADOS" placeholder="RG (0000000)" type="text" required>
+                                </div>
+                                <div class="col-12">
+                                    <input name='telefone' class="inptDADOS" placeholder="TELEFONE" type="text" required>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <input name='email' class="inptDADOS" placeholder="EMAIL" type="email" required>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <input name='emailConfirmar' class="inptDADOS" placeholder="CORMFIRME SEU EMAIL" type="email" required>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <input name='senha' id="senha" class="inptDADOS" placeholder="SENHA" type="password" required>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <input name='senhaConfirmar' id="senharConfirmar" class="inptDADOS" placeholder="CONFIEME SUA SENHA" type="password" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="text-ttp">LOCALIZAÇÂO</p>
+                                </div>
+                                <div class="col-12">
+                                    <input name='cep' class="inptDADOS" placeholder="CEP" type="text" name="cep" id="cep"
+                                        onblur="pesquisacep(this.value)" required>
+                                </div>
+                                <div class="col-12">
+                                    <input name='estado' class="inptDADOS" placeholder="ESTADO" type="text" name="uf" id="uf" required>
+                                </div>
+                                <div class="col-12">
+                                    <input name='cidade' class="inptDADOS" placeholder="CIDADE" type="text" name="cidade"
+                                        id="cidade" required>
+                                </div>
+                                <div class="col-12">
+                                    <input name='rua' class="inptDADOS" placeholder="RUA" type="text" name="rua" id="rua" required>
+                                </div>
+                                <div class="col-12">
+                                    <input name='bairro' class="inptDADOS" placeholder="BAIRRO" type="text" name="bairro"
+                                        id="bairro" required>
+                                </div>
+                                <script src="{% static 'script/locate.js'%}"></script>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space"></div>
+
+                    <div class="bnts">
+                        <button id="submit" type="submit" class="inptSUBM">C O N E C T E - S E</button>
+                        <label class="textAncLOG" for="">Já possui uma conta? </label>
+                        <a href="{% url 'login' %}"><input type="button" value="L O G I N" class="inptENVD"></a>
+                    </div>
+                </form>
+                <!-- INCONES REDES SOCIAIS -->
+                <div class="inconsREDES">
+                    <a href=""><img src="{% static 'imagens/tw.png'%}" alt=""></a>
+                    <a href=""><img src="{% static 'imagens/insta.png'%}" alt=""></a>
+                    <a href=""><img src="{% static 'imagens/face.png'%}" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'script/CreateAccountConfirmFields.js'%}"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+{% endblock content %}
+
+
+    
