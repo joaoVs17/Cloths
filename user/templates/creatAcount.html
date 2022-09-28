@@ -27,25 +27,55 @@
                                     <input name='nome' class="inptDADOS" placeholder="NOME" type="text" required>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <input name='cpf' class="inptDADOS" placeholder="CPF (000.000.000-00)" type="text" required>
+                                    {% if status == '1' %}
+                                        <input name='cpf' class="inptDADOSER" placeholder="CPF já está cadastrado" type="text" required>
+                                    {% else %}
+                                        <input name='cpf' class="inptDADOS" placeholder="CPF (000.000.000-00)" type="text" required>
+                                    {% endif %}
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <input name="rg" class="inptDADOS" placeholder="RG (0000000)" type="text" required>
+                                    {% if status == '2' %}
+                                        <input name="rg" class="inptDADOSER" placeholder="RG já está cadastrado" type="text" required>
+                                    {% else %}
+                                        <input name="rg" class="inptDADOS" placeholder="RG (0000000)" type="text" required>
+                                    {% endif %}
                                 </div>
                                 <div class="col-12">
-                                    <input name='telefone' class="inptDADOS" placeholder="TELEFONE" type="text" required>
+                                    {% if status == '3' %}
+                                        <input name='telefone' class="inptDADOSER" placeholder="Telefone já está cadastrado" type="text" required>
+                                    {% else %}
+                                        <input name='telefone' class="inptDADOS" placeholder="TELEFONE" type="text" required>
+                                    {% endif %}
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <input name='email' class="inptDADOS" placeholder="EMAIL" type="email" required>
+                                    {% if status == '4' %}
+                                        <input name='email' id="email" class="inptDADOSER" placeholder="Os emails não batem" type="email" required>
+                                    {% elif status == '6' %}
+                                        <input name='email' id="email" class="inptDADOSER" placeholder="Esse emaik já existe" type="email" required>
+                                    {% else %}
+                                        <input name='email' id="email" class="inptDADOS" placeholder="EMAIL" type="email" required>
+                                    {% endif %}
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <input name='emailConfirmar' class="inptDADOS" placeholder="CORMFIRME SEU EMAIL" type="email" required>
+                                    {% if status == '5' %}
+                                    <input name='emailConfirmar' id="emailConfirmar" class="inptDADOSER" placeholder="Os emails não batem" type="email" required>
+                                    {% else %}
+                                        <input name='emailConfirmar' id="emailConfirmar" class="inptDADOS" placeholder="CORMFIRME SEU EMAIL" type="email" required>
+                                    {% endif %}
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <input name='senha' id="senha" class="inptDADOS" placeholder="SENHA" type="password" required>
+                                    {% if status == '1' %}
+                                        <input name='senha' id="senha" class="inptDADOSER" placeholder="Senhas não batem" type="password" required>
+                                    {% elif status != '1'%}
+                                        <input name='senha' id="senha" class="inptDADOS" placeholder="SENHA" type="password" required>
+                                    {% endif %}
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <input name='senhaConfirmar' id="senharConfirmar" class="inptDADOS" placeholder="CONFIEME SUA SENHA" type="password" required>
+                                    {% if status == '1' %}
+                                    <input name='senhaConfirmar' id="senhaConfirmar" class="inptDADOSER" placeholder="Senhas não batem" type="password" required>
+                                    {% elif status != '1' %}
+                                        <input name='senhaConfirmar' id="senhaConfirmar" class="inptDADOS" placeholder="CONFIRME SUA SENHA" type="password" required>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
