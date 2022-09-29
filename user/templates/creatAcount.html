@@ -51,7 +51,8 @@
                                     {% if status == '4' %}
                                         <input name='email' id="email" class="inptDADOSER" placeholder="Os emails não batem" type="email" required>
                                     {% elif status == '6' %}
-                                        <input name='email' id="email" class="inptDADOSER" placeholder="Esse emaik já existe" type="email" required>
+                                        <input name='email' id="email" class="inptDADOSER" placeholder="Esse email
+                                         já existe" type="email" required>
                                     {% else %}
                                         <input name='email' id="email" class="inptDADOS" placeholder="EMAIL" type="email" required>
                                     {% endif %}
@@ -64,16 +65,16 @@
                                     {% endif %}
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    {% if status == '1' %}
+                                    {% if status == '5' %}
                                         <input name='senha' id="senha" class="inptDADOSER" placeholder="Senhas não batem" type="password" required>
-                                    {% elif status != '1'%}
+                                    {% elif status != '5'%}
                                         <input name='senha' id="senha" class="inptDADOS" placeholder="SENHA" type="password" required>
                                     {% endif %}
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    {% if status == '1' %}
+                                    {% if status == '5' %}
                                     <input name='senhaConfirmar' id="senhaConfirmar" class="inptDADOSER" placeholder="Senhas não batem" type="password" required>
-                                    {% elif status != '1' %}
+                                    {% elif status != '5' %}
                                         <input name='senhaConfirmar' id="senhaConfirmar" class="inptDADOS" placeholder="CONFIRME SUA SENHA" type="password" required>
                                     {% endif %}
                                 </div>

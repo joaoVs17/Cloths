@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Meu Perfil{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'stylesCSS/style.css'%}">
+    <link rel="stylesheet" href="{% static 'stylesCSS/stylePerfil.css'%}">
+{% endblock css %}
+
+{% block content %}
+<header>
+    <nav>
+        <ul class="menu">
+            <li><a href="{% url 'home'%}">Home</a></li>
+            <li><a href="lojasCadastradas.html">Lojas Cadastradas</a></li>
+            <li><a href="EMBREVE.html">Coleções em Alta</a></li>
+            <li><a href="EMBREVE.html">Contato</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- ROW do Menu -->
+        <div class="row">
+            <div class="col-3 col-sm-3 col-mb-2 col-lg-2 col-xl-2 align-items-center d-none d-lg-block">
+                <img class="imgLogo" src="{% static 'imagens/CLOTHS ICON.png' %}" alt="">
+            </div>
+            <!-- Culuna barra de Pesquisa -->
+            <div class="col-8 col-sm-8 col-mb-9 col-lg-7 col-xl-7">
+                <div id="divBusca">
+                    <input type="text" id="txtBusca" placeholder="Busque por Lojas, Cidades e Coleções" />
+                    <button type="button"><img src="{% static 'imagens/lupinha.png' %}" alt=""></button>
+                </div>
+            </div>
+            <!-- Culuna login -->
+            <div class="col-2">
+                <div class="logBOX">
+                    <a href="perfil_usuario.html">
+                        {% if request.user.is_authenticated %}
+                           <!-- <div class="userFT">{{request.user.nome.0}}</div> -->
+                           <div class="userFT"><img src="{{request.user.usuario_foto.url}}"></div>
+                        {% endif %}
+                    </a>
+                    <div class="loginTXT">
+                        {% if request.user.is_authenticated == False %}
+                            <a href="{% url 'login' %}">LOGIN</a>
+                        {% elif request.user.is_authenticated %}
+                            <a href="{% url 'sair' %}">SAIR</a>
+                        {% endif %}  
+                    </div>
+                        {% if request.user.is_authenticated == False %}
+                            <a href="{% url 'login' %}"><img class="setinhaFT" src="{% static 'imagens/setinha.png'%}" alt=""></a>
+                        {% elif request.user.is_authenticated %}
+                            <a href="{% url 'sair' %}"><img class="setinhaFT" src="{% static 'imagens/setinha.png'%}" alt=""></a>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+
+<section>
+    <nav>
+        <input class="menu_user_bnt" type="checkbox">
+        <ul class="menu-user">
+            <li><a class="active" href="perfil_usuario.html" class="active">Informações pessoais</a></li>
+            <li><a href="perfil_usuario_editar.html">Editar perfil</a></li>
+            <li><a href="meus_pacotes.html">Meus pacotes</a></li>
+        </ul>
+    </nav>
+</section>
+
+
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="box-color-lr">
+                    <img src="{% static 'imagens/9a5a18d55121d82359078da58c64e0fb.jpg' %}" alt="">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="box-color-cz">
+                    <div>
+                        <h5>Informações de contato</h5>
+                    </div>
+                    <hr>
+                    <div>
+                        <h3>Nome</h3>
+                        <p>Nome do usuario</p>
+                    </div>
+                    <div>
+                        <h3>Email</h3>
+                        <p>Exemplodeemail@gmail.com</p>
+                    </div>
+                    <div>
+                        <h3>Telefone</h3>
+                        <p>(69) 9843442-8922</p>
+                    </div>
+                    <div>
+                        <h3>Endereço</h3>
+                        <p>Nome do usuario</p>
+                    </div>
+                    <div class="buttons_user_edd">
+                        <a href="planos_precos_loja.html"><button>Atualizar para conta cormecial</button></a>
+                        <a href="perfil_usuario_editar.html"><button>Editar Perfil</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<footer>
+    <div class="rodapeBOX">
+        <div class="container align-items-center">
+            <div class="row">
+                <div class="col-6 col-sm-5 col-mb-4 col-lg-3 col-xl-3  d-none d-lg-block">
+                    <div class="circulo-branco">
+                        <img src="{% static 'imagens/CLOTHS ICON.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 col-mb-4 col-lg-2 col-xl-2">
+                    <p class="ttRodape">INICIO</p>
+                    <p class="txRodape">
+                        <a href="">Home</a>
+                        <a href="">Cidades</a>
+                        <a href="">Roupas</a>
+                        <a href="">Coleções</a>
+                    </p>
+                </div>
+                <div class="col-4 col-sm-4 col-mb-4 col-lg-2 col-xl-2">
+                    <p class="ttRodape">Sobre nós</p>
+                    <p class="txRodape">
+                        <a href="">Informações Gerais</a>
+                        <a href="">Empresa</a>
+                        <a href="">Blog</a>
+                    </p>
+                </div>
+                <div class="col-4 col-sm-4 col-mb-4 col-lg-2 col-xl-2">
+                    <p class="ttRodape">Suporte</p>
+                    <p class="txRodape">
+                        <a href="">Telefones</a>
+                        <a href="">Chat</a>
+                    </p>
+                </div>
+                <div class="col-5 col-sm-5 col-mb-5 col-lg-3 col-xl-3 d-none d-lg-block">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <a href="">
+                                <div class="imgBoxCircleW"><img class="igmIconRodape" src="{% static 'imagens/insta.png' %}"
+                                        alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="">
+                                <div class="imgBoxCircleW"><img class="igmIconRodape" src="{% static 'imagens/face.png' %}" alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="">
+                                <div class="imgBoxCircleW"><img class="igmIconRodape" src="{% static 'imagens/tw.png' %}" alt="">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="">
+                                <button class="bntRodape">contato</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rodapeLinhaMn"></div>
+    <div class="rodapeLinhaPt">
+        <p>CONDICIONAL SEM LIMITES</p>
+    </div>
+</footer>
+
+
+{% endblock content %}
+
+
+    

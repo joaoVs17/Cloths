@@ -47,18 +47,17 @@ class Cadastro(View):
             db = get_user_model()
 
             #aqui são verificados os possíveis erros
-            print(db.objects.filter(cpf=cpf))
             if senha != senhaConfirmar:
                 raise ErrorPassword
             if email != emailConfirmar:
                 raise ErrorEmail
-            if len(db.objects.filter(cpf=cpf)>0):
+            if len(db.objects.filter(cpf=cpf)) > 0 :
                 raise CpfAlreadyExists
-            if len(db.objects.filter(rg=rg)>0):
+            if len(db.objects.filter(rg=rg)) > 0 :
                 raise RgAlreadyExists
-            if len(db.objects.filter(telefone=telefone)>0):
+            if len(db.objects.filter(telefone=telefone)) > 0 :
                 raise TelefoneAlreadyExistes
-            if len(db.objects.filter(email=email)>0):
+            if len(db.objects.filter(email=email)) >0 :
                 raise EmailAlreadyExists
             #se nenhum erro rolou, é criado o usuário
 
@@ -88,15 +87,21 @@ class Cadastro(View):
 
 class Login(View):
     def get(self, request):
-        return render(request, 'login.html')
+        if request.user.is_authenticated == True: # na hora que o usuário acessar a página de login, se ele
+            return redirect ('home')                #estiver logado, ele vai ser redirecionado para home
+        elif request.user.is_authenticated == False:
+            return render(request, 'login.html')
     def post(self, request):
+        
+        redirectURL = request.GET.get('next')
+
         email = request.POST.get('email')
         senha = request.POST.get('senha')
 
         if request.user.is_authenticated == False: #basicamente, isso só deixa o usuário logar se ele estiver deslogado antes
             user = authenticate(request, email=email, password=senha)
             login(request, user)
-            return redirect('home')
+            return redirect(redirectURL)
         elif request.user.is_authenticated == True:
             return redirect('home') #Talvez mudar isso
         
@@ -106,3 +111,15 @@ class Login(View):
 def sair(request):
     logout(request)
     return redirect('home')
+
+
+class Perfil(LoginRequiredMixin, View):
+    login_url = '/usuario/login/'
+    redirect_field_name = 'next'
+    def get(self, request):
+        print(request.user.pk)
+        return render(request, 'perfil_usuario.html')
+    def post(self, request):
+        pass
+
+    #eu queria exibir a foto de perfil do usuário

@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
@@ -54,6 +55,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     last_login = models.DateTimeField(null=True)
     date_joined = models.DateTimeField(default=timezone.now ,null=True)
+
+    foto_usuario = models.ImageField(upload_to='fotos_usuarios/', null=True)
     
     objects = CustomUserManager()
 
