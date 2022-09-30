@@ -94,6 +94,8 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="box-color-cz">
                     <form action="" class="form-bt">
+                        {% csrf_token %}
+                        <input type="file" value="Send" accept="image/*" >
                         <div class="row">
                             <div class="col-12">
                                 <p>DADOS PESSOAIS</p>
