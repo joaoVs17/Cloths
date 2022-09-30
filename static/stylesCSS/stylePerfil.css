@@ -76,7 +76,7 @@
     border-radius: 100%;
 }
 
-.box-color-lr a img {
+.box-color-lr label img {
     width: 70%;
     height: 70%;
     border-radius: 100%;
@@ -86,7 +86,8 @@
     transition: all 0.5s;
 }
 
-.box-color-lr a:hover img {
+.box-color-lr label:hover img {
+    cursor: pointer;
     opacity: 100%;
 }
 

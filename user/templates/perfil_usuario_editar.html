@@ -88,45 +88,45 @@
                     {% elif request.user.foto_usuario != None %}
                         <img src="{{request.user.foto_usuario.url}}">
                     {% endif %}
-                    <a href=""><img src="{% static 'imagens/trocar-camera.png' %}" alt=""></a>
+                    <label for="foto_usuario"><img src="{% static 'imagens/trocar-camera.png' %}" alt=""></label>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="box-color-cz">
-                    <form action="" class="form-bt">
+                    <form action="" class="form-bt" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input type="file" value="Send" accept="image/*" >
+                        <input name="foto_usuario" type="file"  style="display:none;" id="foto_usuario" accept="image/*" >
                         <div class="row">
                             <div class="col-12">
                                 <p>DADOS PESSOAIS</p>
                             </div>
                             <div class="col-12">
-                                <input class="inptDADOS" placeholder="NOME" type="text">
+                                <input name="nome" class="inptDADOS" value="{{request.user.nome}}" placeholder="NOME" type="text" required>
                             </div>
                             <div class="col-12">
-                                <input class="inptDADOS" placeholder="TELEFONE" type="text">
+                                <input name="telefone" class="inptDADOS" value="{{request.user.telefone}}" placeholder="TELEFONE" type="text" required>
                             </div>
                             <div class="col-12">
                                 <br>
                                 <p>LOCALIZAÇÂO</p>
                             </div>
                             <div class="col-3">
-                                <input class="inptDADOS" placeholder="CEP" type="text" name="cep2" id="cep"
-                                    onblur="pesquisacep2(this.value)">
+                                <input name="cep" class="inptDADOS" placeholder="CEP" value="{{request.user.cep}}" type="text" name="cep2" id="cep"
+                                    onblur="pesquisacep2(this.value)" required>
                             </div>
                             <div class="col-4">
-                                <input class="inptDADOS" placeholder="ESTADO" type="text" name="uf2" id="uf">
+                                <input name="estado" class="inptDADOS" placeholder="ESTADO" value="{{request.user.estado}}" type="text" name="uf2" id="uf" required>
                             </div>
                             <div class="col-5">
-                                <input class="inptDADOS" placeholder="CIDADE" type="text" name="cidade2"
-                                    id="cidade">
+                                <input name="cidade" class="inptDADOS" placeholder="CIDADE" value="{{request.user.cidade}}" type="text" name="cidade2"
+                                    id="cidade" required>
                             </div>
                             <div class="col-7">
-                                <input class="inptDADOS" placeholder="RUA" type="text" name="rua2" id="rua">
+                                <input name="rua" class="inptDADOS" placeholder="RUA" value="{{request.user.rua}}" type="text" name="rua2" id="rua" required>
                             </div>
                             <div class="col-5">
-                                <input class="inptDADOS" placeholder="BAIRRO" type="text" name="bairro2"
-                                    id="bairro">
+                                <input name="bairro" class="inptDADOS" placeholder="BAIRRO" value="{{request.user.bairro}}" type="text" name="bairro2"
+                                    id="bairro" required>
                             </div>
                             <script src="{% static 'script/locate.js' %}"></script>
                         </div>

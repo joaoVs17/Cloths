@@ -5,6 +5,7 @@ from .models import User
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.storage import FileSystemStorage
 
 # Exceções
 class ErrorEmail(Exception):
@@ -131,6 +132,39 @@ class EditarPerfil(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'perfil_usuario_editar.html')
     def post(self, request):
-        pass
+        db = get_user_model()
+        user = db.objects.get(pk=request.user.pk)
+
+        nome = request.POST.get('nome')
+        telefone = request.POST.get('telefone')
+        cep = request.POST.get('cep')
+        estado = request.POST.get('estado')
+        cidade = request.POST.get('cidade')
+        rua = request.POST.get('rua')
+        bairro = request.POST.get('bairro')
+
+        if request.FILES:
+            fs = FileSystemStorage(location='media/fotos_usuarios/', base_url='/fotos_usuarios/')
+            upload = request.FILES['foto_usuario']
+            filename = fs.save(upload.name, upload)
+            url = fs.url(filename)
+            if url:
+                user.foto_usuario = url
+        
+
+        user.nome = nome
+        user.telefone = telefone
+        user.cep = cep
+        user.estado = estado
+        user.cidade = cidade
+        user.rua = rua
+        user.bairro = bairro
+
+        
+
+        user.save()
+
+        return redirect('perfil')
+
 
     #eu queria exibir a foto de perfil do usuário
