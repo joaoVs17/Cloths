@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', views.Login.as_view(), name='login'),
     path('sair/', views.sair, name='sair'),
     path('perfil/', views.Perfil.as_view(), name='perfil'),
+    path('perfil/editar/', views.EditarPerfil.as_view(), name='editar_perfil'),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

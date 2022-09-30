@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import User
@@ -90,18 +91,21 @@ class Login(View):
         if request.user.is_authenticated == True: # na hora que o usuário acessar a página de login, se ele
             return redirect ('home')                #estiver logado, ele vai ser redirecionado para home
         elif request.user.is_authenticated == False:
+            
+            print('batata')
             return render(request, 'login.html')
     def post(self, request):
-        
         redirectURL = request.GET.get('next')
-
         email = request.POST.get('email')
         senha = request.POST.get('senha')
 
         if request.user.is_authenticated == False: #basicamente, isso só deixa o usuário logar se ele estiver deslogado antes
             user = authenticate(request, email=email, password=senha)
             login(request, user)
-            return redirect(redirectURL)
+            if redirectURL != None:
+                return redirect(redirectURL)
+            else:
+                return redirect('home')
         elif request.user.is_authenticated == True:
             return redirect('home') #Talvez mudar isso
         
@@ -117,8 +121,15 @@ class Perfil(LoginRequiredMixin, View):
     login_url = '/usuario/login/'
     redirect_field_name = 'next'
     def get(self, request):
-        print(request.user.pk)
         return render(request, 'perfil_usuario.html')
+    def post(self, request):
+        pass
+
+class EditarPerfil(LoginRequiredMixin, View):
+    login_url = '/usuario/login/'
+    redirect_field_name = 'next'
+    def get(self, request):
+        return render(request, 'perfil_usuario_editar.html')
     def post(self, request):
         pass
 

@@ -36,9 +36,15 @@
                     <!-- Culuna login -->
                     <div class="col-2">
                         <div class="logBOX">
-                            <a href="perfil_usuario.html">
+                            <a href="{% url 'perfil' %}">
                                 {% if request.user.is_authenticated %}
-                                    <div class="userFT">{{request.user.nome.0}}</div>
+                                    {% if not request.user.foto_usuario %}
+                                        <div class="userFT">{{request.user.nome.0}}</div>
+                                    {% elif request.user.foto_usuario %}
+                                        <div class="userFT"><img src="{{request.user.foto_usuario.url}}"></div>
+                                    {% endif %}
+                                   <!--  -->
+                                   
                                 {% endif %}
                             </a>
                             <div class="loginTXT">

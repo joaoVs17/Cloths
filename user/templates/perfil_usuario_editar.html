@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Meu Perfil{% endblock title %}
+{% block title %}Editar Perfil{% endblock title %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'stylesCSS/style.css'%}">
-    <link rel="stylesheet" href="{% static 'stylesCSS/stylePerfil.css'%}">
+    <link rel="stylesheet" href="{% static 'stylesCSS/style.css' %}">
+    <link rel="stylesheet" href="{% static 'stylesCSS/stylePerfil.css' %}">
 {% endblock css %}
 
 {% block content %}
+
+
 <header>
     <nav>
         <ul class="menu">
@@ -33,7 +35,7 @@
             <!-- Culuna login -->
             <div class="col-2">
                 <div class="logBOX">
-                    <a href="{% url 'perfil' %}">
+                    <a href="perfil_usuario.html">
                         {% if request.user.is_authenticated %}
                             {% if not request.user.foto_usuario %}
                                 <div class="userFT">{{request.user.nome.0}}</div>
@@ -68,8 +70,8 @@
     <nav>
         <input class="menu_user_bnt" type="checkbox">
         <ul class="menu-user">
-            <li><a class="active" href="perfil_usuario.html" class="active">Informações pessoais</a></li>
-            <li><a href="{% url 'editar_perfil' %}">Editar perfil</a></li>
+            <li><a href="{% url 'perfil' %}">Informações pessoais</a></li>
+            <li><a class="active" href="{% url 'editar_perfil' %}">Editar perfil</a></li>
             <li><a href="meus_pacotes.html">Meus pacotes</a></li>
         </ul>
     </nav>
@@ -86,34 +88,52 @@
                     {% elif request.user.foto_usuario != None %}
                         <img src="{{request.user.foto_usuario.url}}">
                     {% endif %}
+                    <a href=""><img src="{% static 'imagens/trocar-camera.png' %}" alt=""></a>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="box-color-cz">
-                    <div>
-                        <h5>Informações de contato</h5>
-                    </div>
-                    <hr>
-                    <div>
-                        <h3>Nome</h3>
-                        <p>{{request.user.nome}}</p>
-                    </div>
-                    <div>
-                        <h3>Email</h3>
-                        <p>{{request.user.emaik}}</p>
-                    </div>
-                    <div>
-                        <h3>Telefone</h3>
-                        <p>{{request.user.telefone}}</p>
-                    </div>
-                    <div>
-                        <h3>CEP</h3>
-                        <p>{{request.user.cep}}</p>
-                    </div>
-                    <div class="buttons_user_edd">
-                        <a href="planos_precos_loja.html"><button>Atualizar para conta cormecial</button></a>
-                        <a href="{% url 'editar_perfil' %}"><button>Editar Perfil</button></a>
-                    </div>
+                    <form action="" class="form-bt">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>DADOS PESSOAIS</p>
+                            </div>
+                            <div class="col-12">
+                                <input class="inptDADOS" placeholder="NOME" type="text">
+                            </div>
+                            <div class="col-12">
+                                <input class="inptDADOS" placeholder="TELEFONE" type="text">
+                            </div>
+                            <div class="col-12">
+                                <br>
+                                <p>LOCALIZAÇÂO</p>
+                            </div>
+                            <div class="col-3">
+                                <input class="inptDADOS" placeholder="CEP" type="text" name="cep2" id="cep"
+                                    onblur="pesquisacep2(this.value)">
+                            </div>
+                            <div class="col-4">
+                                <input class="inptDADOS" placeholder="ESTADO" type="text" name="uf2" id="uf">
+                            </div>
+                            <div class="col-5">
+                                <input class="inptDADOS" placeholder="CIDADE" type="text" name="cidade2"
+                                    id="cidade">
+                            </div>
+                            <div class="col-7">
+                                <input class="inptDADOS" placeholder="RUA" type="text" name="rua2" id="rua">
+                            </div>
+                            <div class="col-5">
+                                <input class="inptDADOS" placeholder="BAIRRO" type="text" name="bairro2"
+                                    id="bairro">
+                            </div>
+                            <script src="{% static 'script/locate.js' %}"></script>
+                        </div>
+                        <br>
+                        <div class="buttons_user_edd">
+                            <button>CONFIRMAR ALTERAÇÕES</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -197,7 +217,7 @@
 </footer>
 
 
+
 {% endblock content %}
 
-
-    
+   
