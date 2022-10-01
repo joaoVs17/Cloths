@@ -151,16 +151,20 @@ class EditarPerfil(LoginRequiredMixin, View):
             if url:
                 user.foto_usuario = url
         
-
-        user.nome = nome
-        user.telefone = telefone
-        user.cep = cep
-        user.estado = estado
-        user.cidade = cidade
-        user.rua = rua
-        user.bairro = bairro
-
-        
+        if nome and not nome.isspace():
+            user.nome = nome
+        if telefone and not telefone.isspace():
+            user.telefone = telefone
+        if cep and not cep.isspace():
+            user.cep = cep
+        if estado and not estado.isspace():
+            user.estado = estado
+        if cidade and not cidade.isspace():
+            user.cidade = cidade
+        if rua and not rua.isspace():
+            user.rua = rua
+        if bairro and not bairro.isspace():
+            user.bairro = bairro
 
         user.save()
 
