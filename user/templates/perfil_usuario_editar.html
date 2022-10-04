@@ -34,7 +34,7 @@
             </div>
             <!-- Culuna login -->
             <div class="col-2">
-                <div class="logBOX">
+                <div class="logBOX" id="logBOX">
                     <a href="perfil_usuario.html">
                         {% if request.user.is_authenticated %}
                             {% if not request.user.foto_usuario %}
@@ -84,9 +84,9 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="box-color-lr">
                     {% if not request.user.foto_usuario %}
-                        <img src="{% static 'imagens/user2.png' %}" alt="">
+                        <img src="{% static 'imagens/user2.png' %}" id="foto" alt="">
                     {% elif request.user.foto_usuario != None %}
-                        <img src="{{request.user.foto_usuario.url}}">
+                        <img src="{{request.user.foto_usuario.url}}" id="foto">
                     {% endif %}
                     <label for="foto_usuario"><img src="{% static 'imagens/trocar-camera.png' %}" alt=""></label>
                 </div>
@@ -219,6 +219,7 @@
 </footer>
 
 
+<script src="{% static 'script/editar.js'%}" ></script>
 
 {% endblock content %}
 

@@ -5,7 +5,9 @@ from .models import User
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.files.storage import FileSystemStorage
+from django.core.files.storage import FileSystemStorage, default_storage
+import os
+from pathlib import Path
 
 # Exceções
 class ErrorEmail(Exception):
@@ -146,9 +148,13 @@ class EditarPerfil(LoginRequiredMixin, View):
         if request.FILES:
             fs = FileSystemStorage(location='media/fotos_usuarios/', base_url='/fotos_usuarios/')
             upload = request.FILES['foto_usuario']
-            filename = fs.save(upload.name, upload)
+            nome = upload.name
+            filename = fs.save(upload.name.replace(" ",""), upload)
             url = fs.url(filename)
             if url:
+                if user.foto_usuario:
+                    currentDirectory=os.getcwd()
+                    fs.delete(currentDirectory+user.foto_usuario.url)
                 user.foto_usuario = url
         
         if nome and not nome.isspace():
@@ -171,4 +177,25 @@ class EditarPerfil(LoginRequiredMixin, View):
         return redirect('perfil')
 
 
-    #eu queria exibir a foto de perfil do usuário
+class AtualizarConta(LoginRequiredMixin,View):
+    login_url = '/usuario/login/'
+    redirect_field_name = 'next'
+    def get(self,request):
+        plano = request.GET.get('plano')
+        if plano:
+            if plano!='normal' and plano!='plus' and plano!='pro': 
+                return redirect('planos')
+            else:
+                return render(request, 'tranformAccount.html', {'plano':plano})
+        else:
+            return redirect('planos')
+    def post(self,request):
+        pass
+
+class PlanosLojas(LoginRequiredMixin, View):
+    login_url = '/usuario/login/'
+    redirect_field_name = 'next'
+    def get(self, request):
+        return render(request, 'planos_precos_loja.html')
+    def post(self, request):
+        pass
