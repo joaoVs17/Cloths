@@ -40,7 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=100, unique=True)
     cpf = models.CharField(max_length=14, unique=True, blank=False)
     rg = models.CharField(max_length=15)
-    telefone = models.CharField(max_length=14, unique=True, blank=True)
+    telefone = models.CharField(max_length=14, unique=True, blank=False)
     password = models.CharField(max_length=128)
     
     cep = models.CharField(max_length=9)
@@ -57,6 +57,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now ,null=True)
 
     foto_usuario = models.ImageField(upload_to='fotos_usuarios/', null=True)
+
+    is_loja_admin = models.BooleanField(default=False)
     
     objects = CustomUserManager()
 
@@ -65,3 +67,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.nome
+
+

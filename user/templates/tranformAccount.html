@@ -19,7 +19,8 @@
                 </div>
                 <h2 style="margin-bottom: 0;"> <b>CADASTRAR LOJA</b> </h2><br><br>
                 <!-- FORMULARIO -->
-                <form action="perfil_adimin .html" class="form-bt">
+                <form class="form-bt" method="POST">
+                    {% csrf_token %}
                     <div class="slids">
                         <div class="slide1" id="slide1">
                             <div class="row">
@@ -29,10 +30,10 @@
                                             <p>INFORMAÇÔES DA LOJA</p>
                                         </div>
                                         <div class="col-12">
-                                            <input class="inptDADOS" placeholder="NOME DA LOJA" type="text" required>
+                                            <input name="nome_loja" class="inptDADOS" placeholder="NOME DA LOJA" type="text" required>
                                         </div>
                                         <div class="col-12">
-                                            <input class="inptDADOS" placeholder="CNPJ (XX. XXX. XXX/0001-XX)"
+                                            <input name="cnpj" class="inptDADOS" placeholder="CNPJ (XX. XXX. XXX/0001-XX)"
                                                 type="text" required>
                                         </div>
                                         <div class="col-12">
@@ -40,23 +41,23 @@
                                             <p>LOCALIZAÇÂO</p>
                                         </div>
                                         <div class="col-3">
-                                            <input class="inptDADOS" placeholder="CEP" type="text" name="cep"
+                                            <input name="cep_loja" class="inptDADOS" placeholder="CEP" type="text" name="cep"
                                                 id="cep" onblur="pesquisacep(this.value)" required>
                                         </div>
                                         <div class="col-4">
-                                            <input class="inptDADOS" placeholder="ESTADO" type="text" name="uf"
+                                            <input name="estado_loja" class="inptDADOS" placeholder="ESTADO" type="text" name="uf"
                                                 id="uf" required>
                                         </div>
                                         <div class="col-5">
-                                            <input class="inptDADOS" placeholder="CIDADE" type="text" name="cidade"
+                                            <input name="cidade_loja" class="inptDADOS" placeholder="CIDADE" type="text" name="cidade"
                                                 id="cidade" required>
                                         </div>
                                         <div class="col-7">
-                                            <input class="inptDADOS" placeholder="RUA" type="text" name="rua"
+                                            <input name="rua_loja" class="inptDADOS" placeholder="RUA" type="text" name="rua"
                                                 id="rua" required>
                                         </div>
                                         <div class="col-5">
-                                            <input class="inptDADOS" placeholder="BAIRRO" type="text" name="bairro"
+                                            <input name="bairro_loja" class="inptDADOS" placeholder="BAIRRO" type="text" name="bairro"
                                                 id="bairro" required>
                                         </div>
                                         <script src="{% static 'script/locate.js' %}"></script>
@@ -73,17 +74,17 @@
                                             <p>INFORMAÇÕES DE PAGAMENTO</p>
                                         </div>
                                         <div class="col-12">
-                                            <input class="inptDADOS" placeholder="NUMERO DO CARTÃO" type="text" required>
+                                            <input name="numero_cartao" class="inptDADOS" placeholder="NUMERO DO CARTÃO" type="text" required>
                                         </div>
                                         <div class="col-12">
-                                            <input class="inptDADOS" placeholder="NOME DO CARTÃO" type="text" required>
+                                            <input name="nome_cartao" class="inptDADOS" placeholder="NOME DO CARTÃO" type="text" required>
                                         </div>
                                         <div class="col-12">
-                                            <input class="inptDADOS" placeholder="CVV" type="text" required>
+                                            <input name="cvv" class="inptDADOS" placeholder="CVV" type="text" required>
                                         </div>
                                         <div class="col-12">
-                                            <input class="inptDADOS" placeholder="DATA DE EXPIRAÇÃO (MM/YYYY)"
-                                                type="text" required>
+                                            <input name="data_expiracao" class="inptDADOS" placeholder="DATA DE EXPIRAÇÃO (MM/YYYY)"
+                                                type="date" required>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +99,7 @@
                         <input type="radio" onclick="muda2()" class="tty" name="radio2" id="radio2">
                     </div>
                     <div class="bnts">
-                        <button type="submit" id="def" class="inptSUBM">CONFIRMAR PAGAMENTO</button>
+                        <input type="submit" id="def" class="inptSUBM" value="CONFIRMAR PAGAMENTO">
                     </div>
 
                     <script>

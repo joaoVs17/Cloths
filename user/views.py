@@ -2,12 +2,14 @@ from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import User
+from lojas.models import Loja
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.storage import FileSystemStorage, default_storage
 import os
 from pathlib import Path
+from hashlib import sha256
 
 # Exceções
 class ErrorEmail(Exception):
@@ -22,7 +24,14 @@ class RgAlreadyExists(Exception):
     pass
 class TelefoneAlreadyExistes(Exception):
     pass
+
+#funções e utilitários
+def custom_encode_Sha(valor):
+    valor = sha256(valor.encode()).hexdigest()
+    return valor
+
 #views
+
 
 class Cadastro(View):
     def get(self, request):
@@ -177,6 +186,8 @@ class EditarPerfil(LoginRequiredMixin, View):
         return redirect('perfil')
 
 
+#Atualização da conta da
+
 class AtualizarConta(LoginRequiredMixin,View):
     login_url = '/usuario/login/'
     redirect_field_name = 'next'
@@ -190,7 +201,33 @@ class AtualizarConta(LoginRequiredMixin,View):
         else:
             return redirect('planos')
     def post(self,request):
-        pass
+
+        nome_loja = request.POST.get('nome_loja')
+        cnpj = request.POST.get('cnpj')
+        cep_loja = request.POST.get('cep_loja')
+        estado_loja = request.POST.get('estado_loja')
+        cidade_loja = request.POST.get('cidade_loja')
+        rua_loja = request.POST.get('rua_loja')
+        bairro_loja = request.POST.get('bairro_loja')
+
+        numero_cartao = custom_encode_Sha(request.POST.get('numero_cartao'))
+        nome_cartao = custom_encode_Sha(request.POST.get('nome_cartao'))
+        cvv = custom_encode_Sha(request.POST.get('cvv'))
+
+        data_expiracao = request.POST.get('data_expiracao')
+
+        db = get_user_model()
+        user = db.objects.get(pk=request.user.pk)
+
+        Loja.objects.create(loja_admin=user,nome_loja=nome_loja, cnpj=cnpj, cep_loja=cep_loja,
+        estado_loja=estado_loja, cidade_loja=cidade_loja, rua_loja=rua_loja, bairro_loja=bairro_loja,
+        numero_cartao=numero_cartao, nome_cartao=nome_cartao, cvv=cvv, data_expiracao=data_expiracao)
+
+        user.is_loja_admin = True
+        user.save()
+        return redirect('perfil_loja')
+
+
 
 class PlanosLojas(LoginRequiredMixin, View):
     login_url = '/usuario/login/'

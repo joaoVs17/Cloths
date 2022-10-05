@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     #Local
     'user',
     'home',
+    'lojas',
 ]
 
 MIDDLEWARE = [
