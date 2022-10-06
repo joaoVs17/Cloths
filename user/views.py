@@ -2,11 +2,11 @@ from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import User
-from lojas.models import Loja
+from lojas.models import Loja, Plano
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.files.storage import FileSystemStorage, default_storage
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.files.storage import FileSystemStorage
 import os
 from pathlib import Path
 from hashlib import sha256
@@ -35,11 +35,14 @@ def custom_encode_Sha(valor):
 
 class Cadastro(View):
     def get(self, request):
-        status = request.GET.get('status')
-        context = {
-            'status': status,
-        }
-        return render(request, 'creatAcount.html', context)
+        if request.user.is_authenticated == True: # na hora que o usuário acessar a página de cadastro, se ele
+            return redirect ('home')                #estiver logado, ele vai ser redirecionado para home
+        elif request.user.is_authenticated == False:
+            status = request.GET.get('status')
+            context = {
+                'status': status,
+            }
+            return render(request, 'creatAcount.html', context)
     def post(self, request):
         nome = request.POST.get('nome')
         cpf = request.POST.get('cpf')
@@ -129,23 +132,32 @@ def sair(request):
     return redirect('home')
 
 
-class Perfil(LoginRequiredMixin, View):
+class Perfil(LoginRequiredMixin,UserPassesTestMixin, View):
+    #inicio filtros
     login_url = '/usuario/login/'
     redirect_field_name = 'next'
+    def test_func(self):
+        return not self.request.user.is_loja_admin #nesse caso ele dá permissão se o valor for False
+    def handle_no_permission(self):
+        return redirect('perfil_loja') #se for True, ele te redireciona para 
+    #fim filtros
     def get(self, request):
         return render(request, 'perfil_usuario.html')
     def post(self, request):
         pass
 
-class EditarPerfil(LoginRequiredMixin, View):
+class EditarPerfil(LoginRequiredMixin,UserPassesTestMixin, View):
+    #inicio filtros
     login_url = '/usuario/login/'
     redirect_field_name = 'next'
+    def test_func(self):
+        return not self.request.user.is_loja_admin #nesse caso ele dá permissão se o valor for False
+    def handle_no_permission(self):
+        return redirect('perfil_loja') #se for True, ele te redireciona para 
+    #fim filtros
     def get(self, request):
         return render(request, 'perfil_usuario_editar.html')
     def post(self, request):
-        db = get_user_model()
-        user = db.objects.get(pk=request.user.pk)
-
         nome = request.POST.get('nome')
         telefone = request.POST.get('telefone')
         cep = request.POST.get('cep')
@@ -154,14 +166,16 @@ class EditarPerfil(LoginRequiredMixin, View):
         rua = request.POST.get('rua')
         bairro = request.POST.get('bairro')
 
+        db = get_user_model()
+        user = db.objects.get(pk=request.user.pk)
+
         if request.FILES:
             fs = FileSystemStorage(location='media/fotos_usuarios/', base_url='/fotos_usuarios/')
             upload = request.FILES['foto_usuario']
-            nome = upload.name
             filename = fs.save(upload.name.replace(" ",""), upload)
             url = fs.url(filename)
             if url:
-                if user.foto_usuario:
+                if user.foto_usuario: 
                     currentDirectory=os.getcwd()
                     fs.delete(currentDirectory+user.foto_usuario.url)
                 user.foto_usuario = url
@@ -188,9 +202,15 @@ class EditarPerfil(LoginRequiredMixin, View):
 
 #Atualização da conta da
 
-class AtualizarConta(LoginRequiredMixin,View):
+class AtualizarConta(LoginRequiredMixin, UserPassesTestMixin,View):
+    #inicio filtros
     login_url = '/usuario/login/'
     redirect_field_name = 'next'
+    def test_func(self):
+        return not self.request.user.is_loja_admin #nesse caso ele dá permissão se o valor for False
+    def handle_no_permission(self):
+        return redirect('perfil_loja') #se for True, ele te redireciona para 
+    #fim filtros
     def get(self,request):
         plano = request.GET.get('plano')
         if plano:
@@ -201,7 +221,7 @@ class AtualizarConta(LoginRequiredMixin,View):
         else:
             return redirect('planos')
     def post(self,request):
-
+        plano = request.GET.get('plano')
         nome_loja = request.POST.get('nome_loja')
         cnpj = request.POST.get('cnpj')
         cep_loja = request.POST.get('cep_loja')
@@ -222,16 +242,34 @@ class AtualizarConta(LoginRequiredMixin,View):
         Loja.objects.create(loja_admin=user,nome_loja=nome_loja, cnpj=cnpj, cep_loja=cep_loja,
         estado_loja=estado_loja, cidade_loja=cidade_loja, rua_loja=rua_loja, bairro_loja=bairro_loja,
         numero_cartao=numero_cartao, nome_cartao=nome_cartao, cvv=cvv, data_expiracao=data_expiracao)
-
+        
         user.is_loja_admin = True
         user.save()
+
+        loja = Loja.objects.get(cnpj=cnpj)
+
+        if plano=='normal':
+            loja.plano = Plano.objects.get(nome='Normal')
+        elif plano=='plus':
+            loja.plano = Plano.objects.get(nome='plus')
+        elif plano=='pro':
+            loja.plano = Plano.objects.get(nome='pro')
+
+        loja.save()    
+        
         return redirect('perfil_loja')
 
 
 
-class PlanosLojas(LoginRequiredMixin, View):
+class PlanosLojas(LoginRequiredMixin,UserPassesTestMixin, View):
+    #inicio filtros
     login_url = '/usuario/login/'
     redirect_field_name = 'next'
+    def test_func(self):
+        return not self.request.user.is_loja_admin #nesse caso ele dá permissão se o valor for False
+    def handle_no_permission(self):
+        return redirect('perfil_loja') #se for True, ele te redireciona para 
+    #fim filtros
     def get(self, request):
         return render(request, 'planos_precos_loja.html')
     def post(self, request):

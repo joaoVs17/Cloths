@@ -16,6 +16,8 @@ class Loja(models.Model):
     loja_admin = models.ForeignKey(User, on_delete=models.CASCADE)
 
     nome_loja = models.CharField(max_length=50)
+    email_loja = models.EmailField(max_length=255, null=True)
+    telefone_loja = models.CharField(max_length=16, null=True)
     cnpj = models.CharField(max_length=18)
 
     cep_loja = models.CharField(max_length=9)
@@ -26,7 +28,7 @@ class Loja(models.Model):
 
     numero_cartao = models.CharField(max_length=64)
     nome_cartao = models.CharField(max_length=64)
-    cvv = models.CharField(max_length=50)
+    cvv = models.CharField(max_length=64)
     data_expiracao = models.DateTimeField(64)
 
     date_joined_loja = models.DateTimeField(default=timezone.now)
