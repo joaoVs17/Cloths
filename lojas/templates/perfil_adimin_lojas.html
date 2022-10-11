@@ -71,8 +71,8 @@
         <ul class="menu-user">
             <li><a class="active" href="{% url 'perfil_loja'%}">Informações da loja</a></li>
             <li><a href="{% url 'perfil_admin'%}">Perfil do adiministrador</a></li>
-            <li><a href="perfil_adimin_editar.html">Editar Perfil</a></li>
-            <li><a href="minhas_colecoes.html">Minhas coleções</a></li>
+            <li><a href="{% url 'editar_perfil_admin'%}">Editar Perfil</a></li>
+            <li><a href="{% url 'minhas_colecoes'%}">Minhas coleções</a></li>
             <li><a href="meus_pacotes.html">Meus pacotes</a></li>
         </ul>
     </nav>

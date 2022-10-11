@@ -35,13 +35,15 @@
                     </div>
                     <!-- Culuna login -->
                     <div class="col-2">
-                        <div class="logBOX">
-                            <a href="{% url 'perfil' %}">
+                        <div class="logBOX" id="logBOX">
+                            <a href="{% url 'perfil'%}">
                                 {% if request.user.is_authenticated %}
                                     {% if not request.user.foto_usuario %}
                                         <div class="userFT">{{request.user.nome.0}}</div>
-                                    {% elif request.user.foto_usuario %}
+                                    {% elif request.user.foto_usuario and not request.user.is_loja_admin %}
                                         <div class="userFT"><img src="{{request.user.foto_usuario.url}}"></div>
+                                    {% elif request.user.is_loja_admin and loja.logo_loja %}
+                                        <div class="userFT"><img src="{{loja.logo_loja.url}}"></div>
                                     {% endif %}
                                    <!--  -->
                                    

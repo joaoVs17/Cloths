@@ -8,6 +8,7 @@
     --Amarelo: #FFA41C;
     --AmareloClaro: #FFCF88;
     --cinza: #595959;
+    --cinzaClaro: #9a9a9a;
 }
 
 .boxCidades {
@@ -193,27 +194,9 @@
 }
 
 .quant {
-    width: 50%;
-}
-
-.quant_bnts {
-    width: 50%;
+    width: 100%;
     display: flex;
-    justify-content: right;
-}
-
-.quant_bnts button {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--LaranjaClaro);
-    color: #333333;
-    background-color: white;
-    font-size: 11px;
-    margin-left: 10px;
-    font-weight: 900;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    justify-content: space-between;
 }
 
 .quant p {
@@ -233,12 +216,21 @@
     color: #333333;
     background-color: white;
     font-size: 14px;
-    font-weight: 900;
+    font-weight: 700;
     border-radius: 5px;
-    cursor: pointer;
     margin-top: 10px;
     font-family: Poppins;
     transition: background-color 0.3s;
+}
+
+.tem {
+    background-color: var(--LaranjaClaro);
+    color: white;
+}
+
+.nao_tem {
+    color: var(--cinzaClaro);
+    border: 2px solid var(--cinzaClaro);
 }
 
 .conttt {
@@ -246,11 +238,6 @@
     padding: 0%;
     display: flex;
     justify-content: space-between;
-}
-
-.bnt_tamanho:hover {
-    background-color: var(--LaranjaClaro);
-    color: white;
 }
 
 .addList {

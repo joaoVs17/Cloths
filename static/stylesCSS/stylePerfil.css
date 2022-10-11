@@ -79,7 +79,6 @@
 .box-color-lr label img {
     width: 70%;
     height: 70%;
-
     border-radius: 100%;
     margin-top: -115%;
     margin-left: 15%;
@@ -88,7 +87,6 @@
 }
 
 .box-color-lr label:hover img {
-    cursor: pointer;
     opacity: 100%;
 }
 
@@ -149,33 +147,12 @@
     cursor: pointer;
 }
 
-.buttons_user_edd #user_edd_sub {
-    padding: 5px 20px;
-    background-color: var(--LaranjaMedio);
-    color: white;
-    font-family: Poppins;
-    letter-spacing: 1px;
-    border: none;
-    border-radius: 10px;
-    font-size: 12px;
-    cursor: pointer;
-}
-
 .buttons_user_edd a button:focus {
     outline: none;
     border: none;
 }
 
-.buttons_user_edd #user_edd_sub:focus {
-    outline: none;
-    border: none;
-}
-
 .buttons_user_edd a button:hover {
-    background-color: #FD441B;
-}
-
-.buttons_user_edd #user_edd_sub:hover {
     background-color: #FD441B;
 }
 

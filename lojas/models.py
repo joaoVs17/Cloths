@@ -13,7 +13,7 @@ class Plano(models.Model):
 
 class Loja(models.Model):
 
-    loja_admin = models.ForeignKey(User, on_delete=models.CASCADE)
+    loja_admin = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     nome_loja = models.CharField(max_length=50)
     email_loja = models.EmailField(max_length=255, null=True)

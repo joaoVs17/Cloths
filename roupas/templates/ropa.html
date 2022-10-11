@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Roupa{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'stylesCSS/style.css' %}">
+    <link rel="stylesheet" href="{% static 'stylesCSS/gerenciador.css' %}">
+    <link rel="stylesheet" href="{% static 'stylesCSS/styleLojasC.css' %}"> 
+{% endblock css %}
+
+{% block content %}
+
+<header>
+    <nav>
+        <ul class="menu">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="lojasCadastradas.html">Lojas Cadastradas</a></li>
+            <li><a href="EMBREVE.html">Coleções em Alta</a></li>
+            <li><a href="EMBREVE.html">Contato</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- ROW do Menu -->
+        <div class="row">
+            <div class="col-3 col-sm-3 col-mb-2 col-lg-2 col-xl-2 align-items-center d-none d-lg-block">
+                <img class="imgLogo" src="{% static 'imagens/CLOTHS ICON.png' %}" alt="">
+            </div>
+            <!-- Culuna barra de Pesquisa -->
+            <div class="col-8 col-sm-8 col-mb-9 col-lg-7 col-xl-7">
+                <div id="divBusca">
+                    <input type="text" id="txtBusca" placeholder="Busque por Lojas, Cidades e Coleções" />
+                    <button type="button"><img src="{% static 'imagens/lupinha.png' %}" alt=""></button>
+                </div>
+            </div>
+            <!-- Culuna login -->
+            <div class="col-2">
+                <div class="logBOX" id="logBOX">
+                    <a href="{% url 'perfil'%}">
+                        {% if request.user.is_authenticated %}
+                            {% if not request.user.foto_usuario %}
+                                <div class="userFT">{{request.user.nome.0}}</div>
+                            {% elif request.user.foto_usuario and not request.user.is_loja_admin %}
+                                <div class="userFT"><img src="{{request.user.foto_usuario.url}}"></div>
+                            {% elif request.user.is_loja_admin and loja.logo_loja %}
+                                <div class="userFT"><img src="{{loja.logo_loja.url}}"></div>
+                            {% endif %}
+                           <!--  -->
+                           
+                        {% endif %}
+                    </a>
+                    <div class="loginTXT">
+                        {% if request.user.is_authenticated == False %}
+                            <a href="{% url 'login' %}">LOGIN</a>
+                        {% elif request.user.is_authenticated %}
+                            <a href="{% url 'sair' %}">SAIR</a>
+                        {% endif %}  
+                    </div>
+                        {% if request.user.is_authenticated == False %}
+                            <a href="{% url 'login' %}"><img class="setinhaFT" src="{% static 'imagens/setinha.png'%}" alt=""></a>
+                        {% elif request.user.is_authenticated %}
+                            <a href="{% url 'sair' %}"><img class="setinhaFT" src="{% static 'imagens/setinha.png'%}" alt=""></a>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="l-container">
+    <div class="c-container-roupa">
+
+        <img class="c-container-roupa__ropa"
+            src="{{roupa.foto.url}}" alt="">
+
+        <div class="c-container-roupa__informacoes">
+            <div class="c-container-ropa__loja">
+                <a href="lojasC_loja.html"><img src="{{roupa.colecao.loja.logo_loja.url}}" alt=""></a>
+                <a href="lojasC_loja.html"><h1>{{roupa.colecao.loja.nome_loja}}</h1></a>
+            </div>
+
+            <p>{{roupa.descricao}}</p>
+
+            <p class="preco"> R${{roupa.preco}} </p>
+
+            <div class="conttt" style="width: 60%;">
+                <button class="bnt_tamanho tem" disabled>PP</button>
+                <button class="bnt_tamanho tem" disabled>P</button>
+                <button class="bnt_tamanho nao_tem" disabled>M</button>
+                <button class="bnt_tamanho tem" disabled>G</button>
+                <button class="bnt_tamanho nao_tem" disabled>GG</button>
+                <button class="bnt_tamanho nao_tem" disabled>XG</button>
+            </div>
+            <br>
+            <button style="width: 60%;" class="addList">Adicionar a lista</button>
+
+        </div>
+
+    </div>
+</div>
+
+
+<footer>
+    <div class="rodapeBOX">
+        <div class="container align-items-center">
+            <div class="row">
+                <div class="col-6 col-sm-5 col-mb-4 col-lg-3 col-xl-3  d-none d-lg-block">
+                    <div class="circulo-branco">
+                        <img src="{% static 'imagens/CLOTHS ICON.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 col-mb-4 col-lg-2 col-xl-2">
+                    <p class="ttRodape">INICIO</p>
+                    <p class="txRodape">
+                        <a href="">Home</a>
+                        <a href="">Cidades</a>
+                        <a href="">Roupas</a>
+                        <a href="">Coleções</a>
+                    </p>
+                </div>
+                <div class="col-4 col-sm-4 col-mb-4 col-lg-2 col-xl-2">
+                    <p class="ttRodape">Sobre nós</p>
+                    <p class="txRodape">
+                        <a href="">Informações Gerais</a>
+                        <a href="">Empresa</a>
+                        <a href="">Blog</a>
+                    </p>
+                </div>
+                <div class="col-4 col-sm-4 col-mb-4 col-lg-2 col-xl-2">
+                    <p class="ttRodape">Suporte</p>
+                    <p class="txRodape">
+                        <a href="">Telefones</a>
+                        <a href="">Chat</a>
+                    </p>
+                </div>
+                <div class="col-5 col-sm-5 col-mb-5 col-lg-3 col-xl-3 d-none d-lg-block">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <a href="">
+                                <div class="imgBoxCircleW"><img class="igmIconRodape" src="{% static 'imagens/insta.png' %}"
+                                        alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="">
+                                <div class="imgBoxCircleW"><img class="igmIconRodape" src="{% static 'imagens/face.png' %}" alt="">
+                                </div> 
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="">
+                                <div class="imgBoxCircleW"><img class="igmIconRodape" src="{% static 'imagens/tw.png' %}" alt="">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="">
+                                <button class="bntRodape">contato</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rodapeLinhaMn"></div>
+    <div class="rodapeLinhaPt">
+        <p>CONDICIONAL SEM LIMITES</p>
+    </div>
+</footer>
+{% endblock content %}

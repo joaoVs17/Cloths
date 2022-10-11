@@ -26,7 +26,9 @@
                             <input name="senha" class="inptDADOS" placeholder="SENHA" type="password" required>
                         </div>
                     </div>
-
+                    {% if status == '1' %}
+                        <div class='alert alert-danger'>Senha ou usuário incorretos</div>
+                    {% endif %}
                     <div class="bnts">
                         <button type="submit" class="inptSUBM-log">L O G I N</button>
                         <label class="textAncLOG" for="">Não tem uma conta? Cadastre-se agora</label>

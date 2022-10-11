@@ -24,6 +24,9 @@ INSTALLED_APPS = [
     'user',
     'home',
     'lojas',
+    'colecoes',
+    'roupas',
+    'pedidos',
 ]
 
 MIDDLEWARE = [

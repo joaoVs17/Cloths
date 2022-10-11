@@ -71,33 +71,7 @@ p {
     font-family: Poppins;
 }
 
-.inptDADOSER {
-    margin-top: 15px;
-    width: 100%;
-    border: none;
-    border-bottom: solid 2px red;
-    font-size: 12px;
-    height: 20px;
-    color: var(--cinza);
-    letter-spacing: 1px;
-    text-align: left;
-    padding-left: 10px;
-    margin-bottom: 5px;
-    font-family: Poppins;
-}
-
-.inptDADOSER::placeholder{
-    color: red;
-}
-
 .inptDADOS:focus {
-    box-shadow: 0 0 0 0;
-    outline: 0;
-    border: none;
-    border-bottom: solid 2px var(--Amarelo);
-    color: var(--cinza);
-}
-.inptDADOSER:focus {
     box-shadow: 0 0 0 0;
     outline: 0;
     border: none;

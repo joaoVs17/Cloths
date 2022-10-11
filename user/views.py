@@ -1,7 +1,9 @@
 from multiprocessing import context
+from re import S
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import User
+from colecoes.models import Colecao
 from lojas.models import Loja, Plano
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -104,23 +106,25 @@ class Cadastro(View):
 class Login(View):
     def get(self, request):
         if request.user.is_authenticated == True: # na hora que o usuário acessar a página de login, se ele
-            return redirect ('home')                #estiver logado, ele vai ser redirecionado para home
+            return redirect ('login')                #estiver logado, ele vai ser redirecionado para home
         elif request.user.is_authenticated == False:
-            
-            print('batata')
-            return render(request, 'login.html')
+            status = request.GET.get('status')
+            return render(request, 'login.html', {'status':status})
     def post(self, request):
         redirectURL = request.GET.get('next')
         email = request.POST.get('email')
         senha = request.POST.get('senha')
 
         if request.user.is_authenticated == False: #basicamente, isso só deixa o usuário logar se ele estiver deslogado antes
-            user = authenticate(request, email=email, password=senha)
-            login(request, user)
-            if redirectURL != None:
-                return redirect(redirectURL)
-            else:
-                return redirect('home')
+            try:
+                user = authenticate(request, email=email, password=senha)
+                login(request, user)
+                if redirectURL != None:
+                    return redirect(redirectURL)
+                else:
+                    return redirect('home')
+            except Exception:
+                return redirect('/usuario/login/?status=1')
         elif request.user.is_authenticated == True:
             return redirect('home') #Talvez mudar isso
         
@@ -146,7 +150,7 @@ class Perfil(LoginRequiredMixin,UserPassesTestMixin, View):
     def post(self, request):
         pass
 
-class EditarPerfil(LoginRequiredMixin,UserPassesTestMixin, View):
+class EditarPerfil(LoginRequiredMixin, View):
     #inicio filtros
     login_url = '/usuario/login/'
     redirect_field_name = 'next'
@@ -251,12 +255,14 @@ class AtualizarConta(LoginRequiredMixin, UserPassesTestMixin,View):
         if plano=='normal':
             loja.plano = Plano.objects.get(nome='Normal')
         elif plano=='plus':
-            loja.plano = Plano.objects.get(nome='plus')
+            loja.plano = Plano.objects.get(nome='Plus')
         elif plano=='pro':
-            loja.plano = Plano.objects.get(nome='pro')
+            loja.plano = Plano.objects.get(nome='Pro')
 
         loja.save()    
         
+        Colecao.objects.create(loja=loja, nome='Main')
+
         return redirect('perfil_loja')
 
 
