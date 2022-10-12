@@ -27,10 +27,13 @@
             </div>
             <!-- Culuna barra de Pesquisa -->
             <div class="col-8 col-sm-8 col-mb-9 col-lg-7 col-xl-7">
-                <div id="divBusca">
-                    <input type="text" id="txtBusca" placeholder="Busque por Lojas, Cidades e Coleções" />
-                    <button type="button"><img src="{% static 'imagens/lupinha.png' %}" alt=""></button>
-                </div>
+                <form action="" method="GET">
+                    {% csrf_token %}
+                    <div id="divBusca">
+                        <input name="query" type="text" id="txtBusca" placeholder="Busque por Lojas, Cidades e Coleções" />
+                        <button type="submit"><img src="{% static 'imagens/lupinha.png' %}" alt=""></button>
+                    </div>
+                </form>
             </div>
             <!-- Culuna login -->
             <div class="col-2">

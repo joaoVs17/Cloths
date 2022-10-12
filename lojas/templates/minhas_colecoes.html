@@ -13,7 +13,7 @@
     <nav>
         <ul class="menu">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="lojasCadastradas.html">Lojas Cadastradas</a></li>
+            <li><a href="{% url 'lojas_cadastradas' %}">Lojas Cadastradas</a></li>
             <li><a href="EMBREVE.html">Coleções em Alta</a></li>
             <li><a href="EMBREVE.html">Contato</a></li>
         </ul>
@@ -27,10 +27,13 @@
             </div>
             <!-- Culuna barra de Pesquisa -->
             <div class="col-8 col-sm-8 col-mb-9 col-lg-7 col-xl-7">
-                <div id="divBusca">
-                    <input type="text" id="txtBusca" placeholder="Busque por Lojas, Cidades e Coleções" />
-                    <button type="button"><img src="{% static 'imagens/lupinha.png' %}" alt=""></button>
-                </div>
+                <form action="{% url 'pesquisa' %}" method="GET">
+                    {% csrf_token %}
+                    <div id="divBusca">
+                        <input name="query" type="text" id="txtBusca" placeholder="Busque por Lojas, Cidades e Coleções" />
+                        <button type="submit"><img src="{% static 'imagens/lupinha.png' %}" alt=""></button>
+                    </div>
+                </form>
             </div>
             <!-- Culuna login -->
             <div class="col-2">
@@ -125,12 +128,12 @@
                         <p>QTD:</p>
                         <div class="conttt">
                             
-                            <button class="bnt_tamanho_2 tem" disabled>PP</button>
-                            <button class="bnt_tamanho_2 tem" disabled>P</button>
-                            <button class="bnt_tamanho_2 nao_tem" disabled>M</button>
-                            <button class="bnt_tamanho_2 tem" disabled>G</button>
-                            <button class="bnt_tamanho_2 nao_tem" disabled>GG</button>
-                            <button class="bnt_tamanho_2 nao_tem" disabled>XG</button>
+                            <button class="bnt_tamanho_2 {% if roupa.pp < 1 or not roupa.pp %}nao_tem {% else %}tem{% endif %}" disabled>PP</button>
+                            <button class="bnt_tamanho_2 {% if roupa.p < 1 or not roupa.p %}nao_tem {% else %}tem{% endif %}" disabled>P</button>
+                            <button class="bnt_tamanho_2 {% if roupa.m < 1 or not roupa.m %}nao_tem {% else %}tem{% endif %}" disabled>M</button>
+                            <button class="bnt_tamanho_2 {% if roupa.g < 1 or not roupa.g %}nao_tem {% else %}tem{% endif %}" disabled>G</button>
+                            <button class="bnt_tamanho_2 {% if roupa.gg < 1 or not roupa.gg %}nao_tem {% else %}tem{% endif %}" disabled>GG</button>
+                            <button class="bnt_tamanho_2 {% if roupa.xg < 1 or not roupa.xg %}nao_tem {% else %}tem{% endif %}" disabled>XG</button>
                         </div>
                         <div class="c-barraBaixa">
                             <p>Add: {{roupa.data_adicao}}</p>
@@ -138,9 +141,11 @@
                                 <button class="c-bnts-barraBaixa__edt">
                                     <img src="{% static 'imagens/editar.png' %}" alt="">
                                 </button>
-                                <button class="c-bnts-barraBaixa__exc">
-                                    <img src="{% static 'imagens/lixeira.png' %}" alt="">
-                                </button>
+                                <a href="{% url 'deletar_roupa' roupa.pk %}">
+                                    <button class="c-bnts-barraBaixa__exc">
+                                        <img src="{% static 'imagens/lixeira.png' %}" alt="">
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -150,14 +155,14 @@
                     <img src="{{roupa.foto.url}}" alt="">
                     <div class="c-card-colection__infos">
                         <h3>{{roupa.nome_roupa}}</h3>
-                        <p>{{roupa}}</p>
+                        <p>QTD:</p>
                         <div class="conttt">        
-                            <button class="bnt_tamanho_2 tem" disabled>34</button>
-                            <button class="bnt_tamanho_2 tem" disabled>35</button>
-                            <button class="bnt_tamanho_2 nao_tem" disabled>36</button>
-                            <button class="bnt_tamanho_2 tem" disabled>37</button>
-                            <button class="bnt_tamanho_2 nao_tem" disabled>38</button>
-                            <button class="bnt_tamanho_2 nao_tem" disabled>39+</button>
+                            <button class="bnt_tamanho_2 {% if roupa.t1 < 1 or not roupa.t1 %}nao_tem {% else %}tem{% endif %}" disabled>34</button>
+                            <button class="bnt_tamanho_2 {% if roupa.t2 < 1 or not roupa.t2 %}nao_tem {% else %}tem{% endif %}" disabled>35</button>
+                            <button class="bnt_tamanho_2 {% if roupa.t3 < 1 or not roupa.t3 %}nao_tem {% else %}tem{% endif %}" disabled>36</button>
+                            <button class="bnt_tamanho_2 {% if roupa.t4 < 1 or not roupa.t4 %}nao_tem {% else %}tem{% endif %}" disabled>37</button>
+                            <button class="bnt_tamanho_2 {% if roupa.t5 < 1 or not roupa.t5 %}nao_tem {% else %}tem{% endif %}" disabled>38</button>
+                            <button class="bnt_tamanho_2 {% if roupa.t6 < 1 or not roupa.t6 %}nao_tem {% else %}tem{% endif %}" disabled>39+</button>
                         </div>
                         <div class="c-barraBaixa">
                             <p>Add: {{roupa.data_adicao}}</p>
@@ -165,9 +170,11 @@
                                 <button class="c-bnts-barraBaixa__edt">
                                     <img src="{% static 'imagens/editar.png' %}" alt="">
                                 </button>
-                                <button class="c-bnts-barraBaixa__exc">
-                                    <img src="{% static 'imagens/lixeira.png' %}" alt="">
-                                </button>
+                                <a href="{% url 'deletar_roupa' roupa.pk %}">
+                                    <button class="c-bnts-barraBaixa__exc">
+                                        <img src="{% static 'imagens/lixeira.png' %}" alt="">
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -232,7 +239,7 @@
                     <label for="">
                         <label class="c-img-modal"
                             style="display: flex; justify-content: center; align-items: center">
-                            <img src="imagens/simbolo-de-interface-de-camera-fotografica-para-botao.png" alt="">
+                            <img id='img1' style="width:100%" src="{% static 'imagens/simbolo-de-interface-de-camera-fotografica-para-botao.png' %}" alt="">
                         </label>
                     </label>
                 </div>
@@ -247,7 +254,7 @@
                                 </p>
                             </div>
                             <div class="col-8">
-                                <input name="nome_roupa" placeholder="Nome da Roupa" class="c-inpt-modal" type="text" required>
+                                <input name="nome_roupa" placeholder="Nome da Roupa" class="c-inpt-modal" type="text">
                             </div>
                         </div>
 
@@ -259,7 +266,7 @@
                                 </p>
                             </div>
                             <div class="col-8">
-                                <input name="preco_roupa" placeholder="Preço" class="c-inpt-modal" type="text" required>
+                                <input name="preco_roupa" placeholder="Preço" class="c-inpt-modal" type="number">
                             </div>
                         </div>
 
@@ -271,7 +278,7 @@
                                 </p>
                             </div>
                             <div class="col-8">
-                                <input name="foto_roupa" style="height: 47px;" placeholder="Foto" class="c-inpt-modal" type="file" required accept="image/*">
+                                <input id='ipt1' name="foto_roupa" style="height: 47px;" placeholder="Foto" class="c-inpt-modal" type="file" accept="image/*">
                             </div>
                         </div>
 
@@ -285,27 +292,27 @@
                             <div class="col-8">
                                 <div class="conttt" style="padding: 0px 5px;">
                                     <label for="checkbox01" name="" id="check01"
-                                        onclick="bunt('checkbox01', 'check01')"
+                                        onclick="bunt('checkbox01', 'check01', 'bnt-tam-1')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">PP</label>
                                     <label for="checkbox02" name="" id="check02"
-                                        onclick="bunt('checkbox02', 'check02')"
+                                        onclick="bunt('checkbox02', 'check02', 'bnt-tam-2')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">P</label>
                                     <label for="checkbox03" name="" id="check03"
-                                        onclick="bunt('checkbox03', 'check03')"
+                                        onclick="bunt('checkbox03', 'check03', 'bnt-tam-3')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">M</label>
                                     <label for="checkbox04" name="" id="check04"
-                                        onclick="bunt('checkbox04', 'check04')"
+                                        onclick="bunt('checkbox04', 'check04', 'bnt-tam-4')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">G</label>
                                     <label for="checkbox05" name="" id="check05"
-                                        onclick="bunt('checkbox05', 'check05')"
+                                        onclick="bunt('checkbox05', 'check05', 'bnt-tam-5')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">GG</label>
                                     <label for="checkbox06" name="" id="check06"
-                                        onclick="bunt('checkbox06', 'check06')"
+                                        onclick="bunt('checkbox06', 'check06', 'bnt-tam-6')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">XG</label>
                                 </div>
@@ -332,18 +339,18 @@
                             </div>
                             <div class="col-8">
                                 <div class="conttt">
-                                    <input type="number" name="t1" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-1" min='0' value='0' required>
-                                    <input type="number" name="t2" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-2" min='0' value='0' required>
-                                    <input type="number" name="t3" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-3" min='0' value='0' required>
-                                    <input type="number" name="t4" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-4" min='0' value='0' required>
-                                    <input type="number" name="t5" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-5" min='0' value='0' required>
-                                    <input type="number" name="t6" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-6" min='0' value='0' required>
+                                    <input type="number" name="t1" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty" id="bnt-tam-1">
+                                    <input type="number" name="t2" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-2">
+                                    <input type="number" name="t3" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-3">
+                                    <input type="number" name="t4" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-4">
+                                    <input type="number" name="t5" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-5">
+                                    <input type="number" name="t6" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-6">
                                 </div>
                             </div>
                         </div>
@@ -351,19 +358,18 @@
                         <!-- INPUT DE CATEGORIA-->
                         <input id="categoria_01" style="display: none" name="categoria" type="text">
                         <!-- INPUT DE CATEGORIA-->
-                    
 
-                    <br>
-                    <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-4">
-                            <button onclick="add('mod')" class="addList">CANCELAR</button>
+                        <br>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <button onclick="add('mod')" class="addList">CANCELAR</button>
+                            </div>
+                            <div class="col-4">
+                                <button style="background-color: #FFA41C;" class="addList">ADICIONAR</button>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <button type="submit" style="background-color: #FFA41C;" class="addList" value="ADICIONAR">ADICIONAR</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
 
                 </div>
             </div>
@@ -377,7 +383,7 @@
                     <label for="">
                         <label class="c-img-modal"
                             style="display: flex; justify-content: center; align-items: center">
-                            <img src="imagens/simbolo-de-interface-de-camera-fotografica-para-botao.png" alt="">
+                            <img id='img2' style="width:100%" src="{% static 'imagens/simbolo-de-interface-de-camera-fotografica-para-botao.png' %}" alt="">
                         </label>
                     </label>
                 </div>
@@ -392,7 +398,7 @@
                                 </p>
                             </div>
                             <div class="col-8">
-                                <input name="nome_roupa" placeholder="Nome da Roupa" class="c-inpt-modal" type="text" required>
+                                <input name="nome_roupa" placeholder="Nome da Roupa" class="c-inpt-modal" type="text">
                             </div>
                         </div>
 
@@ -404,7 +410,7 @@
                                 </p>
                             </div>
                             <div class="col-8">
-                                <input name="preco_roupa" placeholder="Preço" class="c-inpt-modal" type="text" required>
+                                <input name="preco_roupa" placeholder="Preço" class="c-inpt-modal" type="number">
                             </div>
                         </div>
 
@@ -416,7 +422,7 @@
                                 </p>
                             </div>
                             <div class="col-8">
-                                <input name="foto_roupa" style="height: 47px;" placeholder="Foto" class="c-inpt-modal" type="file" accept="image/*" required>
+                                <input id='ipt2' name="foto_roupa" style="height: 47px;" placeholder="Foto" class="c-inpt-modal" type="file" accept="image/*">
                             </div>
                         </div>
 
@@ -430,27 +436,27 @@
                             <div class="col-8">
                                 <div class="conttt" style="padding: 0px 5px;">
                                     <label for="checkbox201" name="" id="check201"
-                                        onclick="bunt2('checkbox201', 'check201')"
+                                        onclick="bunt('checkbox201', 'check201', 'bnt-tam-201')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">34</label>
                                     <label for="checkbox202" name="" id="check202"
-                                        onclick="bunt2('checkbox202', 'check202')"
+                                        onclick="bunt('checkbox202', 'check202', 'bnt-tam-202')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">35</label>
                                     <label for="checkbox203" name="" id="check203"
-                                        onclick="bunt2('checkbox203', 'check203')"
+                                        onclick="bunt('checkbox203', 'check203', 'bnt-tam-203')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">36</label>
                                     <label for="checkbox204" name="" id="check204"
-                                        onclick="bunt2('checkbox204', 'check204')"
+                                        onclick="bunt('checkbox204', 'check204', 'bnt-tam-204')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">37</label>
                                     <label for="checkbox205" name="" id="check205"
-                                        onclick="bunt2('checkbox205', 'check205')"
+                                        onclick="bunt('checkbox205', 'check205', 'bnt-tam-205')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">38</label>
                                     <label for="checkbox206" name="" id="check206"
-                                        onclick="bunt2('checkbox206', 'check206')"
+                                        onclick="bunt('checkbox206', 'check206', 'bnt-tam-206')"
                                         style="cursor: pointer; display: flex; justify-content: center; align-items: center;"
                                         class="bnt_tamanho_2 ">39+</label>
                                 </div>
@@ -477,18 +483,18 @@
                             </div>
                             <div class="col-8">
                                 <div class="conttt">
-                                    <input name="t1" type="number" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-1" min="0" value="0" required>
-                                    <input name="t2" type="number" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-2" min="0" value="0" required>
-                                    <input name="t3" type="number" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-3" min="0" value="0" required>
-                                    <input name="t4" type="number" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-4" min="0" value="0" required>
-                                    <input name="t5" type="number" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-5" min="0" value="0" required>
-                                    <input name="t6" type="number" style="padding-left: 5px; width: 35px; height: 35px;"
-                                        class="bnt_tamanho_2 " id="bnt-tam-6" min="0" value="0" required>
+                                    <input type="number" name="t1" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-201">
+                                    <input type="number" name="t2" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-202">
+                                    <input type="number" name="t3" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-203">
+                                    <input type="number" name="t4" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-204">
+                                    <input type="number" name="t5" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-205">
+                                    <input type="number" name="t6" style="padding-left: 5px; width: 35px; height: 35px;" disabled min="0" value="0"
+                                        class="bnt_tamanho_2 bnt-tty " id="bnt-tam-206">
                                 </div>
                             </div>
                         </div>
@@ -496,19 +502,18 @@
                         <!-- INPUT DE CATEGORIA-->
                         <input id="categoria_02" style="display: none" name="categoria" type="text">
                         <!-- INPUT DE CATEGORIA-->
-                    
 
-                    <br>
-                    <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-4">
-                            <button onclick="add('mod')" class="addList">CANCELAR</button>
+                        <br>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <button onclick="add('mod')" class="addList">CANCELAR</button>
+                            </div>
+                            <div class="col-4">
+                                <button style="background-color: #FFA41C;" class="addList">ADICIONAR</button>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <button type="submit" style="background-color: #FFA41C;" class="addList" value="ADICIONAR">ADICIONAR</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
 
                 </div>
             </div>
@@ -544,23 +549,16 @@
         document.getElementById(catg_inpt).value = categ;
     }
 
-    function bunt(checkbox, check) {
+    function bunt(checkbox, check, bnt_tam) {
         if (document.getElementById(checkbox).checked == true) {
             document.getElementById(check).style.backgroundColor = '#FFF';
             document.getElementById(check).style.color = '#333333';
+            document.getElementById(bnt_tam).disabled = true;
+            document.getElementById(bnt_tam).value = '0';
         } else {
             document.getElementById(check).style.backgroundColor = '#FF6B18';
             document.getElementById(check).style.color = '#FFF';
-        }
-    }
-
-    function bunt2(checkbox, check) {
-        if (document.getElementById(checkbox).checked == true) {
-            document.getElementById(check).style.backgroundColor = '#FFF';
-            document.getElementById(check).style.color = '#333333';
-        } else {
-            document.getElementById(check).style.backgroundColor = '#FF6B18';
-            document.getElementById(check).style.color = '#FFF';
+            document.getElementById(bnt_tam).disabled = false;
         }
     }
 </script>
@@ -637,4 +635,6 @@
         <p>CONDICIONAL SEM LIMITES</p>
     </div>
 </footer>
+
+<script src="{% static 'script/changeImg.js'%}" defer></script>
 {% endblock content %}

@@ -1,0 +1,331 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Lojas Cadastradas{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'stylesCSS/style.css' %}">
+    <link rel="stylesheet" href="{% static 'stylesCSS/styleLojasC.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <!-- //////////////////////////// CABEÇARIO //////////////////////////// -->
+
+    <header>
+        <nav>
+            <ul class="menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#" class="active">Lojas Cadastradas</a></li>
+                <li><a href="EMBREVE.html">Coleções em Alta</a></li>
+                <li><a href="EMBREVE.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <!-- ROW do Menu -->
+            <div class="row">
+                <div class="col-3 col-sm-3 col-mb-2 col-lg-2 col-xl-2 align-items-center d-none d-lg-block">
+                    <img class="imgLogo" src="{% static 'imagens/CLOTHS ICON.png' %}" alt="">
+                </div>
+                <!-- Culuna barra de Pesquisa -->
+                <div class="col-8 col-sm-8 col-mb-9 col-lg-7 col-xl-7">
+                    <form action="{% url 'pesquisa' %}" method="GET">
+                        {% csrf_token %}
+                        <div id="divBusca">
+                            <input name="query" type="text" id="txtBusca" placeholder="Busque por Lojas, Cidades e Coleções" />
+                            <button type="submit"><img src="{% static 'imagens/lupinha.png' %}" alt=""></button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Culuna login -->
+                <div class="col-2">
+                    <div class="logBOX" id="logBOX">
+                        <a href="{% url 'perfil_loja'%}">
+                            {% if request.user.is_authenticated %}
+                                {% if not request.user.foto_usuario %}
+                                    <div class="userFT">{{request.user.nome.0}}</div>
+                                {% elif request.user.foto_usuario and not request.user.is_loja_admin %}
+                                    <div class="userFT"><img src="{{request.user.foto_usuario.url}}"></div>
+                                {% elif request.user.is_loja_admin and loja.logo_loja %}
+                                    <div class="userFT"><img src="{{loja.logo_loja.url}}"></div>
+                                {% endif %}
+                               <!--  -->
+                               
+                            {% endif %}
+                        </a>
+                        <div class="loginTXT">
+                            {% if request.user.is_authenticated == False %}
+                                <a href="{% url 'login' %}">LOGIN</a>
+                            {% elif request.user.is_authenticated %}
+                                <a href="{% url 'sair' %}">SAIR</a>
+                            {% endif %}  
+                        </div>
+                            {% if request.user.is_authenticated == False %}
+                                <a href="{% url 'login' %}"><img class="setinhaFT" src="{% static 'imagens/setinha.png'%}" alt=""></a>
+                            {% elif request.user.is_authenticated %}
+                                <a href="{% url 'sair' %}"><img class="setinhaFT" src="{% static 'imagens/setinha.png'%}" alt=""></a>
+                            {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- //////////////////////////// CONTEUDO //////////////////////////// -->
+    
+    <section>
+        <div class="boxCidades">
+            <p class="ttCidC"> Acre (AC)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Alagoas (AL)</p>
+            <p>Não há nehuma loja registrada nesta região</p>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Amapá (AP)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Amazonas (AM)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Bahia (BA)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Ceará (CE)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Distrito Federal (DF)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Espírito Santo (ES)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Goiás (GO)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Maranhão (MA)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Mato Grosso (MT)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Mato Grosso do Sul (MS)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Minas Gerais (MG)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Pará (PA)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Paraíba (PB)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Paraná (PR)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Pernambuco (PE)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Piauí (PI)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Rio de Janeiro (RJ)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Rio Grande do Norte (RN)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Rio Grande do Sul (RS)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Rondônia (RO)</p>
+
+            <div class="BoxLCC">
+                {% for loja in todas_lojas %}
+                <a class="listCC" href="lojasC_CidadeEspecifica.html">
+                    {% if loja.0 == "RO" %}<p>{{loja.1}}</p>{% endif %}
+                </a> 
+                {% endfor %}
+                 
+            </div>
+
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Roraima (RR)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Santa Catarina (SC)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> São Paulo (SP)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Sergipe (SE)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+
+            <p class="ttCidC"> Tocantins (TO)</p>
+            <div class="BoxLCC">
+                <p>Não há nehuma loja registrada nesta região</p>
+            </div>
+            <hr class="linhaCidC">
+        </div>
+    </section>
+
+    <!-- //////////////////////////// REDAPE //////////////////////////// -->
+
+    <footer>
+        <div class="rodapeBOX">
+            <div class="container align-items-center">
+                <div class="row">
+                    <div class="col-6 col-sm-5 col-mb-4 col-lg-3 col-xl-3  d-none d-lg-block">
+                        <div class="circulo-branco">
+                            <img src="{% static 'imagens/CLOTHS ICON.png' %}" alt="">
+                        </div>
+                    </div>
+                    <div class="col-4 col-sm-4 col-mb-4 col-lg-2 col-xl-2">
+                        <p class="ttRodape">INICIO</p>
+                        <p class="txRodape">
+                            <a href="">Home</a>
+                            <a href="">Cidades</a>
+                            <a href="">Roupas</a>
+                            <a href="">Coleções</a>
+                        </p>
+                    </div>
+                    <div class="col-4 col-sm-4 col-mb-4 col-lg-2 col-xl-2">
+                        <p class="ttRodape">Sobre nós</p>
+                        <p class="txRodape">
+                            <a href="">Informações Gerais</a>
+                            <a href="">Empresa</a>
+                            <a href="">Blog</a>
+                        </p>
+                    </div>
+                    <div class="col-4 col-sm-4 col-mb-4 col-lg-2 col-xl-2">
+                        <p class="ttRodape">Suporte</p>
+                        <p class="txRodape">
+                            <a href="">Telefones</a>
+                            <a href="">Chat</a>
+                        </p>
+                    </div>
+                    <div class="col-5 col-sm-5 col-mb-5 col-lg-3 col-xl-3 d-none d-lg-block">
+                        <div class="row align-items-center">
+                            <div class="col-4">
+                                <a href="">
+                                    <div class="imgBoxCircleW"><img class="igmIconRodape" src="{% static 'imagens/insta.png' %}"
+                                            alt="">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a href="">
+                                    <div class="imgBoxCircleW"><img class="igmIconRodape" src="{% static 'imagens/face.png' %}" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a href="">
+                                    <div class="imgBoxCircleW"><img class="igmIconRodape" src="{% static 'imagens/tw.png' %}" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="">
+                                    <button class="bntRodape">contato</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rodapeLinhaMn"></div>
+        <div class="rodapeLinhaPt">
+            <p>CONDICIONAL SEM LIMITES</p>
+        </div>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+{% endblock content %}
+

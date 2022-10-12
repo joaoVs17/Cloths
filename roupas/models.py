@@ -23,8 +23,8 @@ class Categoria(models.Model):
 
 class Roupa(models.Model):
 
-    colecao = models.ForeignKey(Colecao, on_delete=models.CASCADE)
-    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
+    colecao = models.ForeignKey(Colecao, on_delete=models.CASCADE, null=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT, null=True)
     
     nome_roupa = models.CharField(max_length=255)
     preco = models.FloatField()

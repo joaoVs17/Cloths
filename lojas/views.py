@@ -15,7 +15,10 @@ def GetFileURL(caminho, uploadFoto, request):
     if request.FILES:
             fs = FileSystemStorage(location='media/'+caminho+'/', base_url='/'+caminho+'/')
             upload = request.FILES[uploadFoto]
-            filename = fs.save(upload.name.replace(" ",""), upload)
+            upName=upload.name
+            upName = upName.replace(" ", "")
+            upName = upName.replace("ç","c")
+            filename = fs.save(upName, upload)
             url = fs.url(filename)
             return url
 #
@@ -200,15 +203,36 @@ class MinhasColecoes(LoginRequiredMixin,UserPassesTestMixin,View):
         nome_roupa = request.POST.get('nome_roupa')
         preco_roupa = request.POST.get('preco_roupa')
 
-        t1 = request.POST.get('t1')
-        t2 = request.POST.get('t2')
-        t3 = request.POST.get('t3')
-        t4 = request.POST.get('t4')
-        t5 = request.POST.get('t5')
-        t6 = request.POST.get('t6')
+        if request.POST.get('t1') != None:
+            t1 = request.POST.get('t1')
+        else:
+            t1 = 0
+        if request.POST.get('t2') != None:
+            t2 = request.POST.get('t2')
+        else:
+            t2 = 0
+        if request.POST.get('t3') != None: 
+            t3 = request.POST.get('t3')
+        else:
+            t3 = 0
+        if request.POST.get('t4') != None:
+            t4 = request.POST.get('t4')
+        else:
+            t4 = 0
+        if request.POST.get('t5') != None:
+            t5 = request.POST.get('t5')
+        else:
+            t5 = 0
+        if request.POST.get('t6') != None:
+            t6 = request.POST.get('t6')
+        else:
+            t6 = 0
 
+        print(t1,t2,t3,t4,t5,t6)
+    
+        print(nome_roupa)
         url = GetFileURL(caminho='fotos_roupas', uploadFoto='foto_roupa', request=request)   
-
+        print(url)
         roupa = Roupa(colecao=colecao, categoria=categoria, nome_roupa=nome_roupa, preco=preco_roupa)
         roupa.foto=url
         roupa.save()
@@ -219,6 +243,7 @@ class MinhasColecoes(LoginRequiredMixin,UserPassesTestMixin,View):
             roupa.g=t4
             roupa.gg=t5
             roupa.xg=t6
+            roupa.save()
         elif categoria.tipo_tamanho == tipo_tamanho[1]:
             roupa.t1=t1
             roupa.t2=t2
@@ -226,10 +251,7 @@ class MinhasColecoes(LoginRequiredMixin,UserPassesTestMixin,View):
             roupa.t4=t4
             roupa.t5=t5
             roupa.t6=t6
-
-        
-        
-            
+            roupa.save()
 
         return redirect('minhas_colecoes')
 
@@ -262,3 +284,8 @@ class Pedido(LoginRequiredMixin, UserPassesTestMixin, View):
         return render(request, 'pedido.html', {'loja':loja})
     def post(self, request):
         pass
+
+def delete(request, pk):
+    roupa = Roupa.objects.get(pk=pk)
+    roupa.delete()
+    return redirect('minhas_colecoes')
